@@ -1,4 +1,5 @@
 <?php
 
-    include("./views/blog.view.php");
+    $title = "Home";
 
+    include("./views/blog.view.php");
