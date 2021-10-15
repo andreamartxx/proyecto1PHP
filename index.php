@@ -1,5 +1,4 @@
 <?php
 
-	phpinfo();
+    include("./views/index.view.php");
 
-?>
