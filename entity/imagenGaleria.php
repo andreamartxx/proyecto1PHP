@@ -1,6 +1,47 @@
 <?php
 
     class ImagenGaleria{
+
+        const RUTA_IMAGENES_PORTFOLIO = 'images/index/portfolio/';
+
+        const RUTA_IMAGENES_GALLERY = 'images/index/gallery/';
+
+
+        /**
+
+        * Devuelve el path a las imágenes del portfolio
+
+        *
+
+        * @return string
+
+        */
+
+        public function getUrlPortfolio() : string
+
+        {
+
+            return self::RUTA_IMAGENES_PORTFOLIO . $this->getNombre();
+
+        }
+
+        /**
+
+        * Devuelve el path a las imágenes de la galería
+
+        *
+
+        * @return string
+
+        */
+
+        public function getUrlGallery() : string
+
+        {
+
+            return self::RUTA_IMAGENES_GALLERY . $this->getNombre();
+
+        }
     
         /**
          * Undocumented variable
@@ -178,7 +219,7 @@
                 return $this;
         }
 
-        
+
     }
 
 
