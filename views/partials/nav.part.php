@@ -16,7 +16,7 @@
           <ul class="nav navbar-nav">
 
             <li class="<?=(esOpcionMenuActiva("index")?"active": "");?> lien">
-                <a href="<?=(esOpcionMenuActiva("index")?"#" : "/");?>">
+                <a href="<?=(esOpcionMenuActiva("index")?"#" : "/index.php");?>">
                     <i class="fa fa-bookmark sr-icons"></i> Home
                 </a></li>
 
