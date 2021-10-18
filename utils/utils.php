@@ -6,11 +6,11 @@
 
           return true;
 
-     }elseif(($_SERVER["REQUEST_URI"] && $option=="/")){
+     }elseif(($_SERVER["REQUEST_URI"]== "" && $option=="index")){
 
           return true;
      
-     }else {
+     }else{
 
           return false;
 
@@ -22,9 +22,13 @@
           foreach($options as $valor){
 
                if(esOpcionMenuActiva($valor)){
+
                     return true;
+
                }else{
+
                     return false;
+                    
                }
 
           }
