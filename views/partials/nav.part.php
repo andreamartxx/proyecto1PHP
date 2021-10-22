@@ -7,6 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </button>
             <a  class="navbar-brand page-scroll" href="#page-top">
               <span>[PHOTO]</span>
@@ -27,12 +28,18 @@
 
             <li class="<?=(existeOpcionMenuActivaEnArray(["blog", "single_post"])?"active":"");?> lien">
                 <a href="<?=(esOpcionMenuActiva("blog")?"#" : "/blog.php");?>">
-                    <i class="fa fa-file-text sr-icons"></i> Blog</a></li>
+                    <i class="fa fa-file-text sr-icons"></i> Blog
+                  </a></li>
 
             <li class="<?=(esOpcionMenuActiva("contact")?"active": "");?> lien"> 
             <a href="<?=(esOpcionMenuActiva("contact")?"#" : "/contact.php");?>">
-            <i class="fa fa-bookmark sr-icons">
-                </i> Contact</a></li>
+            <i class="fa fa-bookmark sr-icons"></i> Contact
+                  </a></li>
+
+            <li class="<?=(esOpcionMenuActiva("galeria")?"active": "");?> lien">
+              <a href="<?=(esOpcionMenuActiva("galeria")?"#" : "/galeria.php");?>">
+                <i class="fa fa-image sr-icons"></i> Galeria
+                </a></li>
 
           </ul>
        </div>
