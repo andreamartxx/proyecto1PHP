@@ -36,7 +36,7 @@
 
             if(!$imagenErr){
 
-                if(false === move_uploaded_file($_FILES['imagen']['tmp_name'], "images/index/gallery". $_FILES['imagen']['name'])){
+                if(false === move_uploaded_file($_FILES['imagen']['tmp_name'], "images/index/gallery/". $_FILES['imagen']['name'])){
                     $errores[] = 'Se ha producido un error al mover la imagen';
                     $imagenErr = true;
                 }
