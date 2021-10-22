@@ -43,88 +43,56 @@
 
 				</div>
 
-				<div class="col-xs-6">
+					<div class="col-xs-6">
 
-					<label for="lastName" class="label-control">Last Name</label>
+						<label for="lastName" class="label-control">Last Name</label>
 
-					<input class="form-control" type="text" name="lastName" id="lastName" value="<?=$lastName?>">
+						<input class="form-control" type="text" name="lastName" id="lastName" value="<?=$lastName?>">
 
-				</div>
-
-				</div>
-
-				<div class="form-group">
-
-				<div class="col-xs-12">
-
-					<label for="email" class="label-control">Email</label>
-
-					<input class="form-control <?=($emailErr ? "has-error" : "" );?>" type="text" name="email" id="email" value="<?=$email?>">
+					</div>
 
 				</div>
 
-				</div>
+					<div class="form-group">
 
-				<div class="form-group">
+						<div class="col-xs-12">
 
-				<div class="col-xs-12">
+							<label for="email" class="label-control">Email</label>
 
-					<label for="subject" class="label-control">Subject</label>
+							<input class="form-control <?=($emailErr ? "has-error" : "" );?>" type="text" name="email" id="email" value="<?=$email?>">
 
-					<input class="form-control <?=($subjectError ? "has-error" : "" );?>" type="text" name="subject" id="subject" value="<?=$subject?>">
+						</div>
 
-				</div>
+					</div>
 
-				</div>
+					<div class="form-group">
 
-				<div class="form-group">
+						<div class="col-xs-12">
 
-				<div class="col-xs-12">
+							<label for="subject" class="label-control">Subject</label>
 
-					<label for="message" class="label-control">Message</label>
+							<input class="form-control <?=($subjectError ? "has-error" : "" );?>" type="text" name="subject" id="subject" value="<?=$subject?>">
 
-					<textarea class="form-control" name="message" id="message" value="<?=$message?>"></textarea>
+						</div>
 
-					<button class="pull-right btn btn-lg sr-button">SEND</button>
+					</div>
 
-				</div>
+					<div class="form-group">
 
-				</div>
+						<div class="col-xs-12">
+
+							<label for="message" class="label-control">Message</label>
+
+							<textarea class="form-control" name="message" id="message" value="<?=$message?>"></textarea>
+
+							<button class="pull-right btn btn-lg sr-button">SEND</button>
+
+						</div>
+
+					</div>
 
 				</form>
 			
-			
-			<form class="form-horizontal">
-	       	  <div class="form-group">
-	       	  	<div class="col-xs-6">
-	       	  	    <label class="label-control">First Name</label>
-	       	  		<input class="form-control" type="text">
-	       	  	</div>
-	       	  	<div class="col-xs-6">
-	       	  	    <label class="label-control">Last Name</label>
-	       	  		<input class="form-control" type="text">
-	       	  	</div>
-	       	  </div>
-	       	  <div class="form-group">
-	       	  	<div class="col-xs-12">
-	       	  		<label class="label-control">Email</label>
-	       	  		<input class="form-control" type="text">
-	       	  	</div>
-	       	  </div>
-	       	  <div class="form-group">
-	       	  	<div class="col-xs-12">
-	       	  		<label class="label-control">Subject</label>
-	       	  		<input class="form-control" type="text">
-	       	  	</div>
-	       	  </div>
-	       	  <div class="form-group">
-	       	  	<div class="col-xs-12">
-	       	  		<label class="label-control">Message</label>
-	       	  		<textarea class="form-control"></textarea>
-	       	  		<button class="pull-right btn btn-lg sr-button">SEND</button>
-	       	  	</div>
-	       	  </div>
-	       </form>
 	       <hr class="divider">
 	       <div class="address">
 	           <h3>GET IN TOUCH</h3>
