@@ -21,17 +21,18 @@ include __DIR__ . "/partials/nav.part.php";
 
               <div class="form-group">
 
-              <div class="col-xs-12">
+                <div class="col-xs-12">
 
-                  <label for="imagen" class="label-control">Imagen</label>
+                    <label for="imagen" class="label-control">Imagen</label>
 
-                  <input class="form-control-file" type="file" name="imagen">
+                    <input class="form-control-file" type="file" name="imagen">
 
+                </div>
               </div>
 
               <div class="form-group">
                 <div class="col-xs-12">
-                    <label class="label-control" for="description">Descripción<?=$description;?></label>
+                    <label class="label-control" for="description">Descripción</label>
                     <textarea class="form-control" name="description" id="description"><?=$description;?></textarea>
                     <button class="pull-right btn btn-lg sr-button">ENVIAR</button>
                 </div>
