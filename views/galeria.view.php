@@ -13,12 +13,9 @@ include __DIR__ . "/partials/nav.part.php";
             <h1>GALERÍA</h1>
             <hr>
 
-          <?php if("POST" === $_SERVER["REQUEST_METHOD"]) : ?>
-
-          <?php endif;?>
-          <?php if(("POST" === $_SERVER["REQUEST_METHOD"])&&(empty($errores))) : ?>
-                <a href='<?=$urlImagen?>' target="_blank">Ver Imagen</a>
-          <?php endif;?>
+            <?php
+  				include __DIR__ . "/partials/show-messages.part.php";
+  			?>
 
             <form class="form-horizontal" action="/galeria.php" method="POST" enctype="multipart/form-data">
 
