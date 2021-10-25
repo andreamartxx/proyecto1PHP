@@ -1,7 +1,7 @@
 <?php
     $title = "Galería";
     require_once "./utils/utils.php";
-    require_once "./entity/ImagemGaleria.php";
+    require_once "./entity/ImagenGaleria.php";
     require_once "./utils/File.php";
     require_once "./exceptions/FileException.php";
 
