@@ -32,6 +32,7 @@ include __DIR__ . "/partials/nav.part.php";
                     <input class="form-control-file" type="file" name="imagen">
 
                 </div>
+              </div>
 
                 <div class="form-group">
                     <div class="col-xs-12">
