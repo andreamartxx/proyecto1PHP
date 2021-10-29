@@ -33,7 +33,14 @@
             $this->descripcion = $descripcion;           
 
         }
-    
+
+        public function getUrlAsociados() : string
+
+        {
+
+            return self::RUTA_IMAGENES_LOGO . $this->getNombre();
+
+        }
     
         /**
          * Get the value of nombre
@@ -101,6 +108,8 @@
 
                 return $this;
         }
+
+        
 
     }
 
