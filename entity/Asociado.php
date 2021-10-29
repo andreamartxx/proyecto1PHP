@@ -24,13 +24,13 @@
          *
          * @var string
          */
-        private $descripcion;
+        private $description;
         
 
-        public function __construct(string $nombre, string $logo, string $descripcion = ""){
+        public function __construct(string $nombre, string $logo, string $description = ""){
             $this->nombre = $nombre;
             $this->logo = $logo;
-            $this->descripcion = $descripcion;           
+            $this->description = $description;           
 
         }
 
@@ -90,9 +90,9 @@
          *
          * @return  string
          */ 
-        public function getDescripcion()
+        public function getDescription()
         {
-                return $this->descripcion;
+                return $this->description;
         }
 
         /**
@@ -102,9 +102,9 @@
          *
          * @return  self
          */ 
-        public function setDescripcion(string $descripcion)
+        public function setDescription(string $description)
         {
-                $this->descripcion = $descripcion;
+                $this->description = $description;
 
                 return $this;
         }
