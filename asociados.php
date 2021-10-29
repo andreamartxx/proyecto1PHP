@@ -57,6 +57,7 @@
             $info = 'Imagen enviada correctamente: ';
             $urlImagen = Asociado::RUTA_IMAGENES_LOGO . $imageFile->getFileName();
             $description = "";
+            $nombre = "";
         }else{
             $info =  "Datos erróneos";
         }
