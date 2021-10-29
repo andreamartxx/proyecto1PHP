@@ -6,7 +6,7 @@
     require_once "./exceptions/FileException.php";
     require_once "./utils/SimpleImage.php";
 
-    $info = $description = $nombre= $urlImagen = "";
+    $info = $descripcion = $nombre= $urlImagen = "";
     $nombreError = $imagenErr = $hayErrores = false;
     $errores = [];
 
@@ -41,14 +41,14 @@
         }
        
         $nombre = sanitizeInput(($_POST["nombre"] ?? ""));
-        $description = sanitizeInput(($_POST["description"] ?? ""));
+        $descripcion = sanitizeInput(($_POST["descripcion"] ?? ""));
         
         if(empty($nombre)){
             $errores[] = "El nombre es obligatorio";
             $nombreError = true;
         }
         
-        if(empty($description)){
+        if(empty($descripcion)){
             $errores[] = "La descripción es obligatoria";
             $descripcionError = true;
         }
@@ -56,7 +56,7 @@
         if(0 == count($errores)){
             $info = 'Imagen enviada correctamente: ';
             $urlImagen = Asociado::RUTA_IMAGENES_LOGO . $imageFile->getFileName();
-            $description = "";
+            $descripcion = "";
             $nombre = "";
         }else{
             $info =  "Datos erróneos";
