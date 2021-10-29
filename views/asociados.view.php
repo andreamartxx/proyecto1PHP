@@ -44,7 +44,7 @@ include __DIR__ . "/partials/nav.part.php";
               <div class="form-group">
                 <div class="col-xs-12">
                     <label class="label-control" for="description">Descripción</label>
-                    <textarea class="form-control" name="description" id="description" value="<?=$descripcion?>"></textarea>
+                    <textarea class="form-control" name="description" id="description" ><?=$description?></textarea>
                     <button class="pull-right btn btn-lg sr-button">ENVIAR</button>
                 </div>
               </div>
