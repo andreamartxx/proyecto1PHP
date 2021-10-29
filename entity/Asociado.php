@@ -38,7 +38,7 @@
 
         {
 
-            return self::RUTA_IMAGENES_LOGO . $this->getNombre();
+            return self::RUTA_IMAGENES_LOGO . $this->getLogo();
 
         }
     
