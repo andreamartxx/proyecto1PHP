@@ -13,7 +13,12 @@
     require_once "./exceptions/FileException.php";
     require_once "./utils/SimpleImage.php";
     require_once "./entity/ImagenGaleria.php";
+    require_once "./database/Connection.php";
+    require_once "./database/QueryBuilder.php";
+    require_once "app/config.php";
     
+    $connection = Connection::make($config['database']);
+
     $info = $urlImagen = "";
 
     $description = new TextareaElement();
@@ -61,21 +66,18 @@
               $info = 'Imagen enviada correctamente'; 
               $urlImagen = ImagenGaleria::RUTA_IMAGENES_GALLERY . $file->getFileName();
               //grabamos en la base de datos
-              $connection = connection::make();
-              $sql = "INSERT INTO imagenes (nombre, descripcion) VALUES ('".$file->getFileName() . "' , '" . $description->getValue() . "')";
+              $sql = "INSERT INTO imagenes (nombre, descripcion) VALUES (:nombre, :descripcion)";
               $pdoStatement = $connection->prepare($sql);
               $parameters = [
                 ':nombre'=>$file->getFileName(),
                 ':descripcion'=>$description->getValue()
               ];
-              if(false === $pdopStatement->execute($parameters)){
+              if(false === $pdoStatement->execute($parameters)){
                 $form->addError('No se ha podido guardar la imagen en la base de datos');
               }else{
                 $info = 'Imagen enviada correctamente';
                 $form->reset();
               }
-              
-            
           }catch(Exception $err) {
               $form->addError($err->getMessage());
               $imagenErr = true;
@@ -84,4 +86,11 @@
           
         }
     }
+    $queryBuilder = new QueryBuilder($connection);
+    try{
+      $imagenes = $queryBuilder->findAll('imagenes', 'ImagenGaleria');
+    }catch(QueryException $qe){
+      $imagenes = [];
+    }
+
     include("./views/galeria.view.php");
