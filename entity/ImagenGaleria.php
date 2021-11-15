@@ -1,5 +1,8 @@
 <?php
-class ImagenGaleria
+
+    require_once  __DIR__ . "/Entity.php";
+
+class ImagenGaleria extends Entity
 {
     const RUTA_IMAGENES_PORTFOLIO = 'images/index/portfolio/';
     const RUTA_IMAGENES_GALLERY = 'images/index/gallery/';
@@ -28,6 +31,11 @@ class ImagenGaleria
      */
     private $numDownloads;
 
+    /**
+     * Undocumented variable
+     *
+     * @var int
+     */
     private $id;
     
 
@@ -40,6 +48,19 @@ class ImagenGaleria
         $this->numVisualizaciones = $numVisualizaciones;
         $this->numLikes = $numLikes;
         $this->numDownloads = $numDownloads;
+
+    }
+
+    public function toArray():array{
+
+        return [
+            'id' => $this->getId(),
+            'nombre' => $this->getNombre(),
+            'descripcion' => $this->getDescripcion(),
+            'numVisualizaciones' => $this->getNumVisualizaciones(),
+            'numLikes' => $this->getNumLikes(),
+            'numDownloads' => $this->getNumDownloads()
+        ];
 
     }
 
