@@ -15,10 +15,9 @@
     require_once "./entity/ImagenGaleria.php";
     require_once "./database/Connection.php";
     require_once "./database/QueryBuilder.php";
-    require_once "app/config.php";
+    require_once "./core/App.php";
     
-    $connection = Connection::make($config['database']);
-
+    
     $info = $urlImagen = "";
 
     $description = new TextareaElement();
@@ -50,6 +49,11 @@
     ->appendChild($descriptionWrapper)
     ->appendChild($b);
 
+    $config = require_once 'App/config.php';
+    App::bind('config', $config);
+    App::bind('connection', Connection::make($config['database']));
+    $queryBuilder = new QueryBuilder('imagenes', 'ImagenGaleria');
+
     if ("POST" === $_SERVER["REQUEST_METHOD"]) {
         $form->validate();
         if (!$form->hasError()) {
@@ -65,20 +69,12 @@
               ->toFile(ImagenGaleria::RUTA_IMAGENES_GALLERY . $file->getFileName()); 
               $info = 'Imagen enviada correctamente'; 
               $urlImagen = ImagenGaleria::RUTA_IMAGENES_GALLERY . $file->getFileName();
+                            
               //grabamos en la base de datos
-              $sql = "INSERT INTO imagenes (nombre, descripcion) VALUES (:nombre, :descripcion)";
-              $pdoStatement = $connection->prepare($sql);
-              $parameters = [
-                ':nombre'=>$file->getFileName(),
-                ':descripcion'=>$description->getValue()
-              ];
-              if(false === $pdoStatement->execute($parameters)){
-                $form->addError('No se ha podido guardar la imagen en la base de datos');
-              }else{
-                $info = 'Imagen enviada correctamente';
-                $form->reset();
-              }
-          }catch(Exception $err) {
+
+              $imagenGaleria = new ImagenGaleria($file->getFileName(), $description->getValue());
+              $queryBuilder->save($imagenGaleria);
+                      }catch(Exception $err) {
               $form->addError($err->getMessage());
               $imagenErr = true;
           }
@@ -86,9 +82,9 @@
           
         }
     }
-    $queryBuilder = new QueryBuilder($connection);
+    $queryBuilder = new QueryBuilder('imagenes', 'ImagenGaleria');
     try{
-      $imagenes = $queryBuilder->findAll('imagenes', 'ImagenGaleria');
+      $imagenes = $queryBuilder->findAll();
     }catch(QueryException $qe){
       $imagenes = [];
     }
