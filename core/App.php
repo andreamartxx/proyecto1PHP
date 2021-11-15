@@ -10,6 +10,13 @@
             static::$container[$key] = $value;
         }
 
+        /**
+         * Undocumented function
+         *
+         * @param string $key
+         * @return mixed
+         * @throws AppException
+         */
         public static function get(string $key){
             if(!array_key_exists($key, static::$container)){
                 throw new AppException("No se ha encontrado la clave $key en el contenedor");
