@@ -16,6 +16,10 @@
     require_once "./database/Connection.php";
     require_once "./database/QueryBuilder.php";
     require_once "./core/App.php";
+    require_once "./repository/ImagenGaleriaRepository.php";
+    require_once "./utils/Forms/SelectElement.php";
+    require_once "./utils/Forms/OptionElement.php";
+    require_once "./repository/CategoriaRepository.php";
     
     
     $info = $urlImagen = "";
@@ -42,17 +46,35 @@
     $b->setCssClass('pull-right btn btn-lg sr-button');
 
     $form = new FormElement('', 'multipart/form-data');
+
+    $config = require_once 'App/config.php';
+    App::bind('config', $config);
+    App::bind('connection', Connection::make($config['database']));
+
+    $repositorio = new ImagenGaleriaRepository();
+
+    $repositorioCategoria = new CategoriaRepository();
+
+    $categoriasE1 = new SelectElement(false);
+
+    $categoriasE1
+    ->setName('categoria');
+    $categorias = $repositorioCategoria->findAll();
+    foreach ($categorias as $categoria){
+      $option = new OptionElement($categoriasE1, $categoria->getNombre());
+      $option -> setDefaultValue($categoria->getId());
+      $categoriasE1->appendChild($option);
+    }
+
+    $categoriaWrapper = new MyFormControl($categoriasE1, 'Categoria', 'col-xs-12');
+
     $form
     ->setCssClass('form-horizontal')
     ->appendChild($labelFile)
     ->appendChild($file)
     ->appendChild($descriptionWrapper)
+    ->appendChild($categoriaWrapper)
     ->appendChild($b);
-
-    $config = require_once 'App/config.php';
-    App::bind('config', $config);
-    App::bind('connection', Connection::make($config['database']));
-    $queryBuilder = new QueryBuilder('imagenes', 'ImagenGaleria');
 
     if ("POST" === $_SERVER["REQUEST_METHOD"]) {
         $form->validate();
@@ -72,19 +94,19 @@
                             
               //grabamos en la base de datos
 
-              $imagenGaleria = new ImagenGaleria($file->getFileName(), $description->getValue());
-              $queryBuilder->save($imagenGaleria);
-                      }catch(Exception $err) {
-              $form->addError($err->getMessage());
-              $imagenErr = true;
-          }
+              $imagenGaleria = new ImagenGaleria($file->getFileName(), $description->getValue(), 0, 0, 0, $categoriasE1->getValue());
+              $repositorio->save($imagenGaleria);
+              $form->reset();
+              }catch(Exception $err) {
+                $form->addError($err->getMessage());
+                $imagenErr = true;
+              }
         }else{
           
         }
     }
-    $queryBuilder = new QueryBuilder('imagenes', 'ImagenGaleria');
     try{
-      $imagenes = $queryBuilder->findAll();
+      $imagenes = $repositorio->findAll();
     }catch(QueryException $qe){
       $imagenes = [];
     }
