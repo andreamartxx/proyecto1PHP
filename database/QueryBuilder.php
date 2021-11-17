@@ -77,4 +77,47 @@
             }
         }
 
+        /**
+         * Undocumented function
+         *
+         * @param array $parameters
+         * @return string
+         */
+        private function getUpdates(array $parameters):string{
+            $updates ="";
+            foreach($parameters as $key=>$value){
+                if($key !== 'id'){
+                    if($updates !== ''){
+                        $updates .= ", ";
+                    }
+                    $updates .= $key . "=:" . $key;
+                }
+            }
+
+            return $updates;
+        }
+
+        /**
+         * Undocumented function
+         *
+         * @param Entity $entity
+        * @throws QueryException
+         */
+        public function update (Entity $entity){
+            try{
+                $parameters = $entity->toArray();
+                $sql = sprintf(
+                    'UPDATE %s SET %s WHERE id = :id',
+                    $this->table,
+                    $this->getUpdates($parameters)
+                );
+            
+
+            $statement = $this->connection->prepare($sql);
+            $statement->execute($parameters);
+        }catch(\PDOException $pdoException){
+            throw new QueryException("Error al actualizar el elemento con id {$parameters['id']} : " .$pdoException->getMessage());
+        }
+
     }
+}
