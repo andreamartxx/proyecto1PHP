@@ -16,7 +16,7 @@
            <?=$form->render();?>
            <hr class="divider">
 
-<div class="imagenes_galeria">
+    <div class="imagenes_galeria">
 
     <table class="table">
 
@@ -33,6 +33,9 @@
             <th scope="col">Likes</th>
 
             <th scope="col">Descargas</th>
+
+            <th scope="col">Categoria</th>
+
 
         </tr>
 
@@ -54,6 +57,8 @@
                 <td><?= $imagen->getNumVisualizaciones(); ?></td>
                 <td><?= $imagen->getNumLikes(); ?></td>
                 <td><?= $imagen->getNumDownloads(); ?></td>
+                <td><?= $repositorio->getCategoria($imagen)->getNombre(); ?></td>
+
             </tr>
 
         <?php endforeach; ?>
