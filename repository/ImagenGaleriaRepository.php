@@ -18,4 +18,15 @@
         return $repositorioCategoria->findById($imagenGaleria->getCategoria());
     }
 
+    public function save (Entity $imagenGaleria){
+        $fnGuardaImagen = function () use ($imagenGaleria){
+            $categoria = $this->getCategoria($imagenGaleria);
+            $categoriaRepositorio = new CategoriaRepository();
+            $categoriaRepositorio->nuevaImagen($categoria);
+            parent::save($imagenGaleria);
+        };
+        
+        $this->executeTransaction($fnGuardaImagen);
+    }
+
 }
