@@ -14,6 +14,8 @@
     require_once "./exceptions/FileException.php";
     require_once "./utils/SimpleImage.php";
     require_once "./entity/Asociado.php";
+    require_once "./database/Connection.php";
+    require_once "./repository/AsociadoRepository.php";
     
     $info = $urlImagen = "";
 
@@ -52,20 +54,30 @@
     ->appendChild($nombreWrapper)
     ->appendChild($descriptionWrapper)
     ->appendChild($b);
-
+    
+    $config = require_once 'App/config.php';
+    App::bind('config', $config);
+    App::bind('connection', Connection::make($config['database']));
+    
+    $repositorio = new AsociadoRepository();
     if ("POST" === $_SERVER["REQUEST_METHOD"]) {
         $form->validate();
         if (!$form->hasError()) {
           try {
-            $file->saveUploadedFile(Asociado::RUTA_IMAGENES_ASOCIADO);  
-              // Create a new SimpleImage object
+              $file->saveUploadedFile(Asociado::RUTA_IMAGENES_ASOCIADO);  
+
               $simpleImage = new \claviska\SimpleImage();
               $simpleImage
               ->fromFile(Asociado::RUTA_IMAGENES_ASOCIADO . $file->getFileName())  
               ->resize(50, 50)
               ->toFile(Asociado::RUTA_IMAGENES_ASOCIADO . $file->getFileName());
-              $info = 'Imagen enviada correctamente'; 
+              $info = 'Imagen enviada correctamente';
+
+              //grabamos en la base de datos
+
               $urlImagen = Asociado::RUTA_IMAGENES_ASOCIADO . $file->getFileName();
+              $asociado = new Asociado($nombre->getValue(), $file->getFileName(), $description->getValue());
+              $repositorio->save($asociado);
               $form->reset();
             
           }catch(Exception $err) {
@@ -76,4 +88,11 @@
           
         }
     }    
+
+    try {
+        $asociados = $repositorio->findAll();
+      }catch(QueryException $qe) {
+        $asociados = [];
+        echo $qe->getMessage();
+      }
     include("./views/asociados.view.php");
