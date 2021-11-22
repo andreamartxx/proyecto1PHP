@@ -90,6 +90,7 @@
     }    
 
     try {
+        
         $asociados = $repositorio->findAll();
       }catch(QueryException $qe) {
         $asociados = [];
