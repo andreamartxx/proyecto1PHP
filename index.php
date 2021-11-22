@@ -5,6 +5,7 @@
     require_once "./entity/Asociado.php";
     require_once "./database/Connection.php";
     require_once "./repository/ImagenGaleriaRepository.php";
+    require_once "./repository/AsociadoRepository.php";
 
     $config = require_once 'App/config.php';
     App::bind('config', $config);
@@ -13,10 +14,7 @@
     $repositorio = new ImagenGaleriaRepository();
     $galeria = $repositorio->findAll();
 
-    $asociados[] = new Asociado("First Partner Name", "log1.jpg", "First Partner Name");
-    $asociados[] = new Asociado("Second Partner Name", "log2.jpg", "Second Partner Name");
-    $asociados[] = new Asociado("Third Partner Name", "log3.jpg", "Third Partner Name");
-    $asociados[] = new Asociado("Fourth Partner Name", "log1.jpg", "Fourth Partner Name");
-    $asociados = getAsociados($asociados);
+    $repositorio = new AsociadoRepository();
+    $asociados = $repositorio->findAll();
 
     include("./views/index.view.php");
