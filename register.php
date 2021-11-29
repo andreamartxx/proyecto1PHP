@@ -17,16 +17,29 @@ require_once "./entity/Usuario.php";
 require_once "./database/Connection.php";
 require_once "./repository/UsuarioRepository.php";
 require_once "./core/App.php";
+require_once "./security/PlainPasswordGenerator.php";
 
 
 $info = "";
 $config = require_once 'app/config.php';
 App::bind('config', $config);
 App::bind('connection', Connection::make($config['database']));
+$repositorio = new UsuarioRepository(new PlainPasswordGenerator());
 
-$repositorio = new UsuarioRepository();
-$nombreUsuario->setValidator(new NotEmptyValidator('El nombre de usuari@ no puede estar vacío', true));
+session_start();
+
+    $info = "";
+
+    $nombreUsuario = new InputElement('text');
+
+    $nombreUsuario
+      ->setName('username')
+      ->setId('username');
+
+    $nombreUsuario->setValidator(new NotEmptyValidator('El nombre de usuari@ no puede estar vacío', true));
+
     $userWrapper = new MyFormControl($nombreUsuario, 'Nombre de usuari@', 'col-xs-12');
+
     $email = new EmailElement();
 
     $email
@@ -71,6 +84,7 @@ if("POST" === $_SERVER["REQUEST_METHOD"]){
         try{
             //grabamos en base de datos
             $usuario = new Usuario($nombreUsuario->getValue(), $email->getValue(), $pass->getValue());
+            $repositorio->save($usuario);
             $_SESSION['username'] = $usuario->getUsername();
             header('location: /');
         }catch(QueryException $qe){
