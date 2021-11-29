@@ -18,8 +18,8 @@
                      include __DIR__ . "/partials/show-messages.part.php";
                 ?>
                 <?=$form->render();?>
-                <a href='/login.php'>
-                    ¿Ya eres miembro? Acceso a usuari@s
+                <a href='/register.php'>
+                    ¿Todavía no está registrad@?
                 </a>
             <?php endif?>
          </div>
