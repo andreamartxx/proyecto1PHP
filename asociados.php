@@ -17,6 +17,12 @@
     require_once "./database/Connection.php";
     require_once "./repository/AsociadoRepository.php";
     
+    session_start();
+
+    if (!isset($_SESSION['username'])) {
+      header('location: /login.php');
+    }
+
     $info = $urlImagen = "";
 
     $nombre = new InputElement('text');
@@ -60,6 +66,7 @@
     App::bind('connection', Connection::make($config['database']));
     
     $repositorio = new AsociadoRepository();
+    
     if ("POST" === $_SERVER["REQUEST_METHOD"]) {
         $form->validate();
         if (!$form->hasError()) {
