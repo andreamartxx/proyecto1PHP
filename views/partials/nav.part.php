@@ -36,15 +36,36 @@
             <i class="fa fa-bookmark sr-icons"></i> Contact
                   </a></li>
 
-            <li class="<?=(esOpcionMenuActiva("galeria")?"active": "");?> lien">
-              <a href="<?=(esOpcionMenuActiva("galeria")?"#" : "/galeria.php");?>">
-                <i class="fa fa-image sr-icons"></i> Galeria
-                </a></li>
+                  <?php if(!isset($_SESSION["username"])):?>
+                  <li class="<?= (esOpcionMenuActiva("login")? "active" : "");?> lien">
+                    <a href="<?= (esOpcionMenuActiva("login")? "#" : "/login.php");?>">
+                      <i class="fa fa-sign-in sr-icons"></i> Login
+                    </a>
+                  </li>
+                  <li class="<?= (esOpcionMenuActiva("register")? "active" : ""); ?>">
+                    <a href="<?= (esOpcionMenuActiva("register")? "#" : "/register.php");?>">
+                      <i class="fa fa-sing-in sr-icons"></i> Registro
+                    </a>
+                  </li>
+                <?php else : ?>
+                  <li class="<?= (esOpcionMenuActiva("galeria")? "active" : "");?> lien">
+                    <a href="<?= (esOpcionMenuActiva("galeria")? "#" : "/galeria.php");?>">
+                      <i class="fa fa-image sr-icons"></i> Galería
+                    </a>
+                  </li>
 
-            <li class="<?=(esOpcionMenuActiva("asociados")?"active": "");?> lien">
-              <a href="<?=(esOpcionMenuActiva("asociados")?"#" : "/asociados.php");?>">
-                <i class="fa fa-hand-o-right sr-icons"></i> Asociados
-                </a></li>
+                  <li class="<?= (esOpcionMenuActiva("asociados")? "active" : "");?> lien">
+                    <a href="<?= (esOpcionMenuActiva("asociados")? "#" : "/asociados.php");?>">
+                      <i class="fa fa-image sr-icons"></i> Asociados
+                    </a>
+                  </li>
+
+                  <li class="<?= (esOpcionMenuActiva("logout")? "active" : "");?>">
+                    <a href="<?= (esOpcionMenuActiva("logout")? "#" : "/logout.php");?>">
+                      <i class="fa fa-image sr-icons"></i> <?= $_SESSION["username"]?> - Salir
+                    </a>
+                  </li>                  
+                <?php endif ?>
 
           </ul>
        </div>
