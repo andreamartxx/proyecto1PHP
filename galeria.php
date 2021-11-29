@@ -21,6 +21,11 @@
     require_once "./utils/Forms/OptionElement.php";
     require_once "./repository/CategoriaRepository.php";
     
+    session_start();
+
+    if (!isset($_SESSION['username'])) {
+    header('location: /login.php');
+  }
     
     $info = $urlImagen = "";
 
