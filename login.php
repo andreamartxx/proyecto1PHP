@@ -1,5 +1,9 @@
 <?php
 
+    require_once "./security/PlainPasswordGenerator.php";
+
+    $repositorio = new UsuarioRepository((new PlainPasswordGenerator()));
+
     session_start();
 
     $info = "";
@@ -19,9 +23,27 @@
     $passWrapper = new MyFormControl($pass, 'Contraseña', 'col-xs-12');
     $b = new ButtonElement('Registro', '', '', 'pull-right btn btn-lg sr-button');
     $form = new FormElement();
+    
     $form
         ->appendChild($userWrapper)
         ->appendChild($passWrapper)
         ->appendChild($b);
 
-        
+        if ("POST" === $_SERVER["REQUEST_METHOD"]) {
+            $form->validate();
+            if (!$form->hasError()) {
+                try {
+                    $usuario = $repositorio->findByUserNameAndPassword($nombreUsuario->getValue(), $pass->getValue());
+                    $_SESSION["usurname"] = $usuario->getUsername();
+                    header("location: /");
+                } catch (QueryException $qe ){
+                    $form->addError($qe->getMessage());
+                } catch (NotFoundException $err){
+                    $form->addError($err->getMessage());
+                } catch (Exception $err){
+                    $form->addError($err->getMessage());
+                }
+            }
+        }
+    
+        include ("./views/login.view.php");
