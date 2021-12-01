@@ -1,8 +1,28 @@
 <?php
+$title = "Login";
+require_once "./utils/utils.php";
+require_once "./utils/Forms/FormElement.php";
+require_once "./utils/Forms/PasswordElement.php";
+require_once "./utils/Forms/ButtonElement.php";
+require_once "./utils/Forms/LabelElement.php";
+require_once "./utils/Forms/EmailElement.php";
+require_once "./utils/Forms/custom/MyFormControl.php";
+require_once "./utils/Validator/NotEmptyValidator.php";
+require_once "./utils/Validator/PasswordMatchValidator.php";
+require_once "./utils/Validator/MinLengthValidator.php";
+require_once "./utils/Validator/MinLowerCaseValidator.php";
+require_once "./utils/Validator/MinDigitValidator.php";
+require_once "./entity/Usuario.php";
+require_once "./database/Connection.php";
+require_once "./repository/UsuarioRepository.php";
+require_once "./core/App.php";
+require_once "./security/Argon2PasswordGenerator.php";
 
-    require_once "./security/PlainPasswordGenerator.php";
-
-    $repositorio = new UsuarioRepository((new PlainPasswordGenerator()));
+$info = "";
+$config = require_once 'app/config.php';
+App::bind('config', $config);
+App::bind('connection', Connection::make($config['database']));
+$repositorio = new UsuarioRepository(new Argon2PasswordGenerator());
 
     session_start();
 
@@ -34,7 +54,7 @@
             if (!$form->hasError()) {
                 try {
                     $usuario = $repositorio->findByUserNameAndPassword($nombreUsuario->getValue(), $pass->getValue());
-                    $_SESSION["usurname"] = $usuario->getUsername();
+                    $_SESSION["username"] = $usuario->getUsername();
                     header("location: /");
                 } catch (QueryException $qe ){
                     $form->addError($qe->getMessage());
