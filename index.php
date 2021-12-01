@@ -7,7 +7,9 @@
     require_once "./repository/ImagenGaleriaRepository.php";
     require_once "./repository/AsociadoRepository.php";
 
-    $config = require_once 'App/config.php';
+    session_start();
+
+    $config = require_once 'app/config.php';
     App::bind('config', $config);
     App::bind('connection', Connection::make($config['database']));
 
