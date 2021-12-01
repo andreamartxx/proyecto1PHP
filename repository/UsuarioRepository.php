@@ -2,10 +2,15 @@
 
 require_once __DIR__. "/../entity/Usuario.php";
 require_once __DIR__ . '/../database/QueryBuilder.php';
+require_once "./security/Argon2PasswordGenerator.php";
 
 class UsuarioRepository extends QueryBuilder
+
 {
-    public function __construct(IPasswordGenerator $passwordGenerator){
+
+    private $passwordGenerator;
+
+    public function __construct(Argon2PasswordGenerator $passwordGenerator){
         $this->passwordGenerator = $passwordGenerator;
         parent::__construct('users', 'Usuario');
     }
@@ -17,26 +22,31 @@ class UsuarioRepository extends QueryBuilder
      * @param string $password
      * @return Usuario
      */
-    public function findByUserNameAndPassword(string $username, string $password): ?Usuario{
-        $sql = "SELECT * FORM $this->table WHERE username = :username AND password = :password";
-        $parameters = ['username' => $username,
-                        'password' =>$this->passwordGenerator::encrypt($password)];
+    public function findByUserNameAndPassword(string $username, string $password): Usuario{
+        $sql = "SELECT * FROM $this->table WHERE username = :username";
+        $parameters = ['username' => $username];
         
-        try{
-            $pdoSatement = $this->connection->prepare($sql);
-            $pdoSatement->execute($parameters);
-            $pdoSatement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $this->classEntity);
-            $result = $pdoSatement->fetchAll();
-            if(empty($result)){
-                throw new NotFoundException("No se ha encontrado ningún usuario con esas credenciales");
+        $statement = $this->connection->prepare($sql);
+        $statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classEntity);
+        $statement->execute($parameters);
+        $result = $statement->fetch();
+        if(empty($result)){
+            throw new NotFoundException("No se ha encontrado ningún elemento con esas credenciales");
+        }else{
+            if(!$this->passwordGenerator::passwordVerify($password, $result->getPassword())){
+                throw new NotFoundException("No se ha encontrado ningún elemento con esas credenciales");
             }
-            return $result[0];
-        }catch(\PDOException $pdoException){
-            throw new QueryException('No se ha podido ejecutar la consulta solicitada: ' .$pdoException->getMessage());
         }
+        return $result;
     
-        return null;
-    
+    }
+
+    public function save(Entity $entity){
+        
+            $parameters = $entity->toArray();
+            $entity->setPassword($this->passwordGenerator::encrypt($parameters['password']));
+            parent::save($entity);     
+         
     }
 
 }
